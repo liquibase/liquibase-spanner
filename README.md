@@ -202,7 +202,7 @@ will fail in Spanner but not in the Liquibase extension.
 Testing requirements:
  * Emulator requires [testcontainers](https://www.testcontainers.org/) and its [requirements](https://www.testcontainers.org/supported_docker_environment/) installed.
  * Spanner in GCP requires SPANNER_PROJECT and SPANNER_INSTANCE environment variables set to an active instance
- * Spanner in GCP requires application default credentials set or GOOGLE_APPLICATION_CREDENTIALS environent set
+ * Spanner in GCP requires application default credentials set or GOOGLE_APPLICATION_CREDENTIALS environment set
 
 ### Deploying
 

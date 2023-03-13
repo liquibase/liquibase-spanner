@@ -23,15 +23,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.time.Duration;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testcontainers.containers.GenericContainer;
-import org.testcontainers.containers.wait.strategy.Wait;
+import org.testcontainers.containers.SpannerEmulatorContainer;
+import org.testcontainers.utility.DockerImageName;
 
 public class TestHarness {
   private static final Logger logger = LoggerFactory.getLogger(TestHarness.class);
@@ -124,7 +123,7 @@ public class TestHarness {
     service.getDatabaseAdminClient().dropDatabase(instanceId, databaseId);
   }
 
-  static GenericContainer<?> testContainer;
+  static SpannerEmulatorContainer spannerContainer;
 
   //
   // Create a Spanner emulator instance
@@ -144,20 +143,14 @@ public class TestHarness {
 
       // Create the container
       final String SPANNER_EMULATOR_IMAGE = "gcr.io/cloud-spanner-emulator/emulator:1.2.0";
-      testContainer =
-          new GenericContainer<>(SPANNER_EMULATOR_IMAGE)
-              .withCommand()
-              .withExposedPorts(9010, 9020)
-              .withStartupTimeout(Duration.ofSeconds(10))
-              .waitingFor(Wait.forHttp("/").forStatusCode(404));
+      spannerContainer =
+          new SpannerEmulatorContainer(DockerImageName.parse(SPANNER_EMULATOR_IMAGE));
 
       // Start the container
-      testContainer.start();
+      spannerContainer.start();
 
       // JDBC Connection
-      spannerEmulatorHost =
-          String.format(
-              "%s:%d", testContainer.getContainerIpAddress(), testContainer.getMappedPort(9010));
+      spannerEmulatorHost = spannerContainer.getEmulatorGrpcEndpoint();
     }
 
     // Create the Spanner service
@@ -191,8 +184,8 @@ public class TestHarness {
         } catch (SpannerException e) {
           // ignore
         }
-        if (testContainer != null) {
-          testContainer.stop();
+        if (spannerContainer != null) {
+          spannerContainer.stop();
         }
       }
     };

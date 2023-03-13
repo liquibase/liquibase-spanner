@@ -17,7 +17,6 @@ package com.google.cloud.spanner.liquibase.sample;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.time.Duration;
 import java.util.UUID;
 import javax.sql.DataSource;
 import org.springframework.boot.CommandLineRunner;
@@ -25,13 +24,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
-import org.testcontainers.containers.GenericContainer;
-import org.testcontainers.containers.wait.strategy.Wait;
+import org.testcontainers.containers.SpannerEmulatorContainer;
+import org.testcontainers.utility.DockerImageName;
 
 @SpringBootApplication
 public class SampleSpringBootApplication {
   /** This sample application uses a Spanner emulator that runs in a Docker container. */
-  private static GenericContainer<?> emulator;
+  private static SpannerEmulatorContainer emulator;
 
   public static void main(String[] args) {
     // Start the Spanner emulator before starting the Spring Boot application.
@@ -88,9 +87,7 @@ public class SampleSpringBootApplication {
   @SuppressWarnings("resource")
   static void startSpannerEmulator() {
     String SPANNER_EMULATOR_IMAGE = "gcr.io/cloud-spanner-emulator/emulator:latest";
-    emulator = new GenericContainer<>(SPANNER_EMULATOR_IMAGE).withCommand()
-        .withExposedPorts(9010, 9020).withStartupTimeout(Duration.ofSeconds(10))
-        .waitingFor(Wait.forHttp("/").forStatusCode(404));
+    emulator = new SpannerEmulatorContainer(DockerImageName.parse(SPANNER_EMULATOR_IMAGE));
     emulator.start();
   }
 
