@@ -1,7 +1,5 @@
 <?xml version="1.0"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.google.cloudspannerecosystem</groupId>
   <artifactId>liquibase-spanner</artifactId>
@@ -19,7 +17,7 @@
       <organization>Google LLC</organization>
     </developer>
     <developer>
-      <name>Knut Olav Løite</name>
+      <name>Knut Olav L&#xF8;ite</name>
       <email>koloite@gmail.com</email>
       <organizationUrl>https://github.com/olavloite</organizationUrl>
     </developer>
@@ -36,32 +34,28 @@
     <url>https://github.com/cloudspannerecosystem/liquibase-spanner</url>
     <tag>HEAD</tag>
   </scm>
-
   <issueManagement>
     <url>https://github.com/cloudspannerecosystem/liquibase-spanner/issues</url>
     <system>GitHub Issues</system>
   </issueManagement>
-
   <licenses>
     <license>
-      <name>Apache-2.0</name>
-      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <name>FSL-1.1-ALv2</name>
+      <url>https://fsl.software/FSL-1.1-ALv2.template.md</url>
+      <comments>Functional Source License, Version 1.1, ALv2 Future License</comments>
     </license>
   </licenses>
   <properties>
     <java.version>1.8</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
     <liquibase.version>4.17.2</liquibase.version>
     <snakeyaml.version>1.33</snakeyaml.version>
-
     <gax-grpc.version>2.4.0</gax-grpc.version>
     <jupiter.version>5.6.2</jupiter.version>
     <testcontainers.version>1.17.6</testcontainers.version>
     <truth.version>1.0.1</truth.version>
     <mockito.version>1.10.19</mockito.version>
   </properties>
-
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -87,7 +81,6 @@
       <groupId>com.google.cloud</groupId>
       <artifactId>google-cloud-spanner-jdbc</artifactId>
     </dependency>
-    
     <!-- Liquibase test dependencies -->
     <dependency>
       <groupId>junit</groupId>
@@ -101,7 +94,8 @@
       <version>1.0.5</version>
       <scope>test</scope>
     </dependency>
-    <dependency> <!-- use a specific Groovy version rather than the one specified by spock-core -->
+    <dependency>
+      <!-- use a specific Groovy version rather than the one specified by spock-core -->
       <groupId>org.codehaus.groovy</groupId>
       <artifactId>groovy-all</artifactId>
       <version>2.5.7</version>
@@ -124,7 +118,6 @@
       <version>1.3-groovy-2.5</version>
       <scope>test</scope>
     </dependency>
-
     <!-- Generic test dependencies -->
     <dependency>
       <groupId>org.junit.jupiter</groupId>
@@ -161,7 +154,6 @@
       <version>${mockito.version}</version>
       <scope>test</scope>
     </dependency>
-    
     <!-- Spanner test dependencies -->
     <dependency>
       <groupId>com.google.cloud</groupId>
@@ -191,9 +183,7 @@
       <classifier>testlib</classifier>
       <scope>test</scope>
     </dependency>
-    
   </dependencies>
-  
   <build>
     <pluginManagement>
       <plugins>
@@ -245,11 +235,11 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
-            <source>1.8</source>
-            <target>1.8</target>
-            <optimize>true</optimize>
-            <debug>true</debug>
-            <encoding>${project.build.sourceEncoding}</encoding>
+          <source>1.8</source>
+          <target>1.8</target>
+          <optimize>true</optimize>
+          <debug>true</debug>
+          <encoding>${project.build.sourceEncoding}</encoding>
         </configuration>
       </plugin>
       <plugin>
@@ -282,21 +272,21 @@
         </executions>
       </plugin>
       <plugin>
-          <groupId>org.codehaus.gmavenplus</groupId>
-          <artifactId>gmavenplus-plugin</artifactId>
-          <version>1.12.1</version>
-          <executions>
-              <execution>
-                  <goals>
-                      <goal>addSources</goal>
-                      <goal>addTestSources</goal>
-                      <goal>compile</goal>
-                      <goal>compileTests</goal>
-                      <goal>removeStubs</goal>
-                      <goal>removeTestStubs</goal>
-                  </goals>
-              </execution>
-          </executions>
+        <groupId>org.codehaus.gmavenplus</groupId>
+        <artifactId>gmavenplus-plugin</artifactId>
+        <version>1.12.1</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>addSources</goal>
+              <goal>addTestSources</goal>
+              <goal>compile</goal>
+              <goal>compileTests</goal>
+              <goal>removeStubs</goal>
+              <goal>removeTestStubs</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
